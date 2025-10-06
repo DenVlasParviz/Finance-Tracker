@@ -22,7 +22,7 @@ export const Summary = () => {
     return `$${amount.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
   return (
-    <aside className="w-[25%] bg-[#f8f6f2] p-4 shadow-md border-l border-gray-200 overflow-y-auto">
+    <aside className="w-[320px] min-w-[320px] max-w-[500px] bg-[#f8f6f2] p-4 shadow-md border-l border-gray-200 overflow-y-auto">
       <section className="border-gray-200 bg-white flex rounded-lg shadow-sm text-black  flex-col ">
         <button onClick={() => setIsExpanded(!isExpanded)} className='w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50 rounded-t-lg'>
           <h2>Months summary</h2>
