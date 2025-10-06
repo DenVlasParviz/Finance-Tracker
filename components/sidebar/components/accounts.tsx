@@ -1,3 +1,5 @@
+import {CollapseText} from "@/components/common/collapseText";
+
 interface SubAccount {
     name: string;
     amount: string;
@@ -19,22 +21,28 @@ export const Accounts = ({ mainAmount, subAccounts,isCollapsed }: AccountProps) 
                             <use href="#chart" />
                         </svg>
 
-                        <span className="text-sm font-semibold">CASH</span>
+                        <CollapseText isCollapsed={isCollapsed} className="font-semibold text-sm">
+                            CASH
+                        </CollapseText>
                     </div>
-                    <span className="text-sm font-semibold">{mainAmount}</span>
+
+                    <CollapseText isCollapsed={isCollapsed} className="text-sm font-semibold">
+                        {mainAmount}
+                    </CollapseText>
                 </div>
             )}
 
 
-            { !isCollapsed &&
-                subAccounts?.map((acc, i) => (
+            {subAccounts?.map((acc, i) => (
                 <a
                     key={i}
                     href="#"
-                    className="flex justify-between items-center p-2 text-gray-300 text-sm rounded hover:bg-gray-700 transition-colors duration-150"
+                    className="flex justify-between items-center p-2 text-gray-300 text-sm rounded hover:bg-gray-700 transition-all"
                 >
-                    <span>{acc.name}</span>
-                    <span className="font-semibold">{acc.amount}</span>
+                    <CollapseText isCollapsed={isCollapsed}>{acc.name}</CollapseText>
+                    <CollapseText isCollapsed={isCollapsed} className="font-semibold">
+                        {acc.amount}
+                    </CollapseText>
                 </a>
             ))}
         </div>

@@ -1,3 +1,5 @@
+import {CollapseText} from "@/components/common/collapseText";
+
 type NavButton = {
     id: string;
     href: string;
@@ -25,12 +27,7 @@ export const NavButtons = ({ isCollapsed }: NavButtonsProps) => {
             label: "Reflect",
             iconId: "bank"
         },
-        {
-            id: "accounts",
-            href: "/accounts",
-            label: "All Accounts",
-            iconId: "down-chevron"
-        }
+
     ];
 
     return (
@@ -38,11 +35,12 @@ export const NavButtons = ({ isCollapsed }: NavButtonsProps) => {
             {buttons.map((btn) => (
                 <li key={btn.id} className={`navlink navlink-${btn.id} ${btn.active ? "active" : ""}`}>
                     <a href={btn.href} className="flex items-center gap-2 p-2 rounded hover:bg-gray-700">
-                        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current text-white">
+                        <svg className="w-6 h-6 flex-shrink-0 fill-current text-white">
                             <use href={`/icons/icons.svg#${btn.iconId}`} />
                         </svg>
-                        {!isCollapsed && <div className="navlink-label text-white">{btn.label}</div>}
-                    </a>
+                        <CollapseText isCollapsed={isCollapsed} className="text-white">
+                            {btn.label}
+                        </CollapseText>                    </a>
                 </li>
             ))}
         </ul>

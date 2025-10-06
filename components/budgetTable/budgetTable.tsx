@@ -82,7 +82,7 @@ export default function BudgetTable() {
     <div className="bg-white">
       {/* Header */}
       <div
-        className="flex items-center border-b border-gray-300 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wide  top-0 z-10"
+        className="flex items-center border-b border-gray-300 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wide top-0 z-10"
         style={{ minHeight: "36px" }}
       >
         <div className="w-6 mr-2 pl-4"></div>

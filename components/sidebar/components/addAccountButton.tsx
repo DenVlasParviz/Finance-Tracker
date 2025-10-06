@@ -1,3 +1,5 @@
+import {CollapseText} from "@/components/common/collapseText";
+
 interface AddAccountButtonProps {
     isCollapsed: boolean;
 }
@@ -12,7 +14,6 @@ export const AddAccountButton = ({ isCollapsed }: AddAccountButtonProps) => {
             <svg className="w-3 h-3" viewBox="0 0 12 12">
                 <use href="#icon_sprite_plus_circle_fill" />
             </svg>
-           <span>Add account</span>
-        </button>
+            <CollapseText isCollapsed={isCollapsed}>Add account</CollapseText>        </button>
     );
 };
