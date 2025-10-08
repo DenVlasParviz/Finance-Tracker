@@ -57,7 +57,7 @@
           {/*    Category Name*/}
           <div className="flex-1 flex items-center gap-2 min-w-0 pr-4">
             <button className="text-left text-sm text-black hover:underline truncate">
-              {category.emoji && <span className="mr-1">{category.emoji}</span>}
+
               {category.name}
             </button>
             {isParent && (

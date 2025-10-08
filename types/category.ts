@@ -8,5 +8,5 @@ export interface Category {
   available: number;
   isParent?: boolean;
   parentId?: string;
-  emoji?: string;
+
 }

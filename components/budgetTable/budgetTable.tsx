@@ -1,69 +1,26 @@
 "use client";
 import { BudgetTableRow } from "@/components/budgetTable/budgetTableRow";
 import { Category } from "@/types/category";
-import { useState } from "react";
-
-const initialCategories: Category[] = [
-  {
-    id: "1",
-    name: "savings",
-    checked: false,
-    level: 1,
-    budgeted: 5000,
-    activity: 0,
-    available: 5000,
-    isParent: true,
-  },
-  {
-    id: "2",
-    name: "save",
-    checked: false,
-    level: 2,
-    budgeted: 5000,
-    activity: 0,
-    available: 5000,
-    parentId: "1",
-  },
-  {
-    id: "3",
-    name: "Bills",
-    checked: false,
-    level: 1,
-    budgeted: 290,
-    activity: 0,
-    available: 290,
-    isParent: true,
-  },
-  {
-    id: "4",
-    name: "Utilities",
-    checked: false,
-    level: 2,
-    budgeted: 90,
-    activity: 0,
-    available: 90,
-    parentId: "3",
-    emoji: "⚡️",
-  },
-  {
-    id: "5",
-    name: "Insurance",
-    checked: false,
-    level: 2,
-    budgeted: 200,
-    activity: 0,
-    available: 200,
-    parentId: "3",
-    emoji: "🛡️",
-  },
-];
+import { useEffect, useState } from "react";
+import { getCategoriesTable } from "@/components/api/api";
 
 export default function BudgetTable() {
-  const [categories, setCategories] = useState<Category[]>(initialCategories);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [expandedIds, setExpandedIds] = useState<string[]>([]);
 
-  const [expandedIds, setExpandedIds] = useState<string[]>(
-    categories.filter((c) => c.isParent).map((c) => c.id),
-  );
+  useEffect(() => {
+    (async () => {
+      try {
+        const cats: Category[] = await getCategoriesTable();
+
+        setCategories(cats);
+        setExpandedIds(cats.filter(c => c.isParent).map(c => c.id));
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+  }, []);
+
   const toggleCheckbox = (id: string) => {
     setCategories(
       categories.map((cat) =>
@@ -71,13 +28,21 @@ export default function BudgetTable() {
       ),
     );
   };
+
   const toggleCategory = (id: string) => {
     if (expandedIds.includes(id)) {
-      setExpandedIds(expandedIds.filter((i) => i !== id)); // Убираем
+      setExpandedIds(expandedIds.filter((i) => i !== id));
     } else {
-      setExpandedIds([...expandedIds, id]); // Добавляем
+      setExpandedIds([...expandedIds, id]);
     }
   };
+
+
+
+  if (categories.length === 0) {
+    return <div className="p-4 text-gray-500">Loading...</div>;
+  }
+
   return (
     <div className="bg-white">
       {/* Header */}
@@ -100,6 +65,7 @@ export default function BudgetTable() {
             category.isParent ||
             (category.parentId && expandedIds.includes(category.parentId));
 
+
           if (!shouldShow) return null;
 
           return (
@@ -108,9 +74,7 @@ export default function BudgetTable() {
               category={category}
               isExpanded={isExpanded}
               onToggleExpand={
-                category.isParent
-                  ? () => toggleCategory(category.id)
-                  : undefined
+                category.isParent ? () => toggleCategory(category.id) : undefined
               }
               onToggleCheck={() => toggleCheckbox(category.id)}
             />
